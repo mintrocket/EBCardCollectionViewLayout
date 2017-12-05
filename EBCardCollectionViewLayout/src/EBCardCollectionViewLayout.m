@@ -127,15 +127,20 @@ static NSString * const CellKind = @"CardCell";
 
 - (CGSize)collectionViewContentSize {
     CGSize retVal = CGSizeZero;
-    
+
     if (_layoutType == EBCardCollectionLayoutHorizontal) {
-        retVal = CGSizeMake([self pageWidth] * [self.collectionView numberOfItemsInSection:0] + _offset.horizontal,
-                            self.collectionView.bounds.size.height);
+        if (self.collectionView.numberOfSections != nil) {
+            retVal = CGSizeMake([self pageWidth] * [self.collectionView numberOfItemsInSection:0] + _offset.horizontal,
+                                self.collectionView.bounds.size.height);
+        }
+
     } else {
-        retVal = CGSizeMake(self.collectionView.bounds.size.width,
-                            [self pageHeight] * [self.collectionView numberOfItemsInSection:0] + _offset.vertical);
+        if (self.collectionView.numberOfSections != nil) {
+            retVal = CGSizeMake(self.collectionView.bounds.size.width,
+                                [self pageHeight] * [self.collectionView numberOfItemsInSection:0] + _offset.vertical);
+        }
     }
-    
+
     return retVal;
 }
 
